@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KAUTTA · 3 propuestas de plataforma · Preview V1</title>
+<style>
+:root{--blue:#2563eb;--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--bg:#f3f5f9;--card:#fff;--ok:#16a34a;--warn:#d97706;--bad:#dc2626}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5;font-size:15px}
+a{color:var(--blue)}
+header.top{background:#0f172a;color:#fff;padding:22px 32px 0}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.brand svg{width:30px;height:30px}
+.brand b{font-size:22px;letter-spacing:.5px}
+.sub{color:#94a3b8;font-size:13px;margin-bottom:16px}
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap}
+nav.tabs button{background:transparent;border:0;color:#94a3b8;padding:12px 18px;font:600 14px inherit;font-family:inherit;cursor:pointer;border-bottom:3px solid transparent}
+nav.tabs button:hover{color:#fff}
+nav.tabs button.on{color:#fff;border-bottom-color:#60a5fa}
+main{max-width:1280px;margin:0 auto;padding:28px 32px 80px}
+section.pane{display:none}
+section.pane.on{display:block}
+h1{font-size:30px;line-height:1.2;margin-bottom:8px}
+h2{font-size:22px;margin:30px 0 12px}
+h3{font-size:16px;margin-bottom:6px}
+p.lead{color:var(--mut);font-size:16px;max-width:860px;margin-bottom:18px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:980px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card ul{padding-left:18px;color:#334155}.card li{margin:4px 0}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:3px 9px;border-radius:99px;margin-right:6px}
+.t-k{background:#dbeafe;color:#1d4ed8}.t-x{background:#ecfccb;color:#3f6212}.t-n{background:#fce7f3;color:#be185d}.t-b{background:#e2e8f0;color:#334155}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px;color:#78350f;font-size:14px;margin:14px 0}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:#f1f5f9;color:#334155;margin:2px 4px 2px 0}
+/* proposal header */
+.ph{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+.ph .badge{width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:30px;font-weight:800;color:#fff;flex:none}
+.ph .txt{flex:1;min-width:280px}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
+.meta div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+.meta b{display:block;font-size:11px;text-transform:uppercase;color:var(--mut);letter-spacing:.4px}
+.seg{display:inline-flex;background:#e2e8f0;border-radius:10px;padding:3px;margin:12px 0}
+.seg button{border:0;background:transparent;padding:7px 16px;border-radius:8px;font:600 13px inherit;font-family:inherit;cursor:pointer;color:#475569}
+.seg button.on{background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.stage{background:#e8ecf3;border-radius:18px;padding:26px;display:flex;gap:28px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.view{display:none;width:100%}.view.on{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.side{flex:1;min-width:280px;max-width:420px}
+.side .card{margin-bottom:12px}
+/* phone */
+.phone{width:300px;height:610px;border-radius:40px;background:#111;padding:10px;box-shadow:0 20px 50px rgba(15,23,42,.35);flex:none}
+.phone .scr{width:100%;height:100%;border-radius:31px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.notch{width:90px;height:6px;border-radius:9px;background:#000;margin:8px auto 4px;opacity:.5}
+/* desktop frame */
+.desk{width:100%;max-width:820px;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(15,23,42,.25);background:#fff;flex:1;min-width:320px}
+.chrome{background:#e5e7eb;padding:8px 12px;display:flex;gap:6px;align-items:center}
+.chrome i{width:10px;height:10px;border-radius:50%;background:#cbd5e1;display:block}
+.chrome span{margin-left:10px;background:#fff;border-radius:6px;padding:2px 12px;font-size:11px;color:#64748b;flex:1;max-width:340px}
+/* ===== A : Feed (violeta oscuro) ===== */
+.A{--a1:#7c5cff;--a2:#22d3ee;--abg:#0d0b1f;--acard:#1a1740}
+.A .scr{background:var(--abg);color:#eef}
+.A .top{display:flex;justify-content:space-between;padding:6px 16px;font-size:12px;color:#a8a3d8}
+.A .streak{background:#2a2560;border-radius:99px;padding:3px 10px;color:#ffd36b;font-weight:700}
+.A .fc{margin:6px 14px;background:linear-gradient(160deg,#2b2370,#15122f);border-radius:20px;padding:16px;flex:1;display:flex;flex-direction:column;gap:10px;border:1px solid #3a3390;min-height:0}
+.A .vid{height:116px;border-radius:14px;background:linear-gradient(120deg,#3b2f9c,#0e7490);display:grid;place-items:center;position:relative}
+.A .vid:after{content:"";border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;opacity:.9}
+.A .vid small{position:absolute;right:8px;bottom:6px;font-size:10px;background:#0008;padding:1px 6px;border-radius:6px}
+.A .q{font-size:14px;font-weight:700;line-height:1.3}
+.A .opt{background:#221e55;border:1px solid #3d3794;border-radius:12px;padding:9px 11px;font-size:12.5px;cursor:pointer;text-align:left;color:#eef;font-family:inherit}
+.A .opt:hover{border-color:var(--a2)}.A .opt.sel{border-color:var(--a2);background:#143a55}
+.A .ia{background:#0b2b3a;border:1px solid #155e75;border-radius:12px;padding:9px 11px;font-size:12px;color:#a5f3fc;display:none}
+.A .ia.on{display:block}
+.A .dock{display:flex;justify-content:space-around;padding:10px 6px 14px;background:#0a0818;font-size:10.5px;color:#8c88c8}
+.A .dock b{color:#fff}
+.A .bar{height:5px;background:#2a2560;border-radius:9px;overflow:hidden}.A .bar i{display:block;height:100%;width:38%;background:linear-gradient(90deg,var(--a1),var(--a2))}
+/* generic dark mini-ui for A admin */
+.A .desk{background:#12102b;color:#e7e5ff}
+.A .chrome{background:#1b1840}.A .chrome i{background:#3a3480}.A .chrome span{background:#0d0b1f;color:#9a96d8}
+.dk{display:grid;grid-template-columns:150px 1fr;min-height:420px}
+.dk .sb{background:#0d0b1f;padding:14px 10px;font-size:12px;border-right:1px solid #2a2560}
+.dk .sb div{padding:7px 9px;border-radius:8px;color:#a8a3d8;margin-bottom:2px}.dk .sb div.on{background:#2a2560;color:#fff}
+.dk .mn{padding:16px;font-size:12.5px}
+.A table{width:100%;border-collapse:collapse;font-size:12px}
+.A th{color:#8c88c8;text-align:left;font-weight:600;padding:6px 8px;border-bottom:1px solid #2a2560}
+.A td{padding:7px 8px;border-bottom:1px solid #1f1c4a}
+.A .chip{padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:700}
+.A .c1{background:#2a2560;color:#c4b8ff}.A .c2{background:#0b3a4a;color:#7ee7fb}.A .c3{background:#4a2a1a;color:#ffc58a}
+.A .curve{height:70px;display:flex;align-items:flex-end;gap:4px;margin:8px 0}
+.A .curve i{flex:1;background:linear-gradient(180deg,var(--a2),var(--a1));border-radius:3px 3px 0 0;display:block}
+/* ===== B : Hub de cohortes (marfil) ===== */
+.B{--b1:#e4572e;--b2:#2f6f4f;--bbg:#faf7f2;--bink:#1b1a17}
+.B .desk{background:var(--bbg);color:var(--bink)}
+.B .chrome{background:#ece6da}.B .chrome span{background:#fff}
+.bk{display:grid;grid-template-columns:165px 1fr;min-height:470px}
+.bk .sb{background:#1b1a17;color:#d8d2c4;padding:16px 12px;font-size:13px}
+.bk .sb h4{color:#fff;font-size:15px;margin-bottom:14px;letter-spacing:.5px}
+.bk .sb div{padding:8px 10px;border-radius:9px;margin-bottom:2px}.bk .sb div.on{background:var(--b1);color:#fff;font-weight:700}
+.bk .sb small{display:block;margin:14px 10px 4px;font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#8d8777}
+.bk .mn{padding:18px;font-size:13px}
+.B .hero{background:linear-gradient(120deg,#1f3d2f,#2f6f4f);color:#fff;border-radius:16px;padding:18px 20px;margin-bottom:14px}
+.B .hero small{opacity:.8;text-transform:uppercase;letter-spacing:.6px;font-size:10.5px}
+.B .hero h3{font-size:20px;margin:4px 0 10px}
+.B .btn{display:inline-block;background:var(--b1);color:#fff;border-radius:9px;padding:7px 14px;font-weight:700;font-size:12.5px;margin-right:6px}
+.B .btn.ghost{background:#ffffff22}
+.B .row{display:grid;grid-template-columns:1.2fr 1fr;gap:12px}
+.B .bx{background:#fff;border:1px solid #e9e2d3;border-radius:14px;padding:13px}
+.B .bx h5{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:#7a7365;margin-bottom:8px}
+.B .li{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed #eee6d6;font-size:12.5px}
+.B .li:last-child{border:0}
+.B .dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px}
+.B .badges{display:flex;gap:8px;margin-top:4px}.B .badges i{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;color:#fff;font-size:13px}
+.B .av{display:flex}.B .av i{width:26px;height:26px;border-radius:50%;border:2px solid #fff;margin-left:-8px;display:block}.B .av i:first-child{margin-left:0}
+.B table{width:100%;border-collapse:collapse;font-size:12px}.B th{color:#7a7365;text-align:left;padding:5px 6px;border-bottom:1px solid #e9e2d3;font-weight:600}.B td{padding:6px;border-bottom:1px solid #f1ebdd}
+/* ===== C : Fábrica (azul KAUTTA) ===== */
+.C{--c1:#2563eb;--cbg:#f6f8fb}
+.C .desk{background:var(--cbg)}
+.ck{display:grid;grid-template-columns:155px 1fr;min-height:470px}
+.ck .sb{background:#fff;border-right:1px solid #e2e8f0;padding:14px 10px;font-size:12.5px}
+.ck .sb h4{color:var(--c1);margin-bottom:12px;font-size:15px}
+.ck .sb div{padding:7px 9px;border-radius:8px;color:#475569;margin-bottom:2px}.ck .sb div.on{background:#dbeafe;color:#1d4ed8;font-weight:700}
+.ck .mn{padding:16px;font-size:12.5px}
+.kan{display:grid;grid-template-columns:repeat(5,minmax(112px,1fr));gap:8px;overflow:auto}
+.kan .col{background:#eaeff6;border-radius:10px;padding:8px;min-height:240px}
+.kan .col h6{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:#64748b;margin-bottom:6px;display:flex;justify-content:space-between}
+.kan .kc{background:#fff;border:1px solid #dbe3ee;border-radius:9px;padding:7px 8px;margin-bottom:6px;font-size:11.5px}
+.kan .kc small{display:block;color:#64748b;font-size:10px;margin-top:2px}
+.q{display:inline-block;font-size:10px;font-weight:800;padding:1px 6px;border-radius:6px}
+.q.hi{background:#dcfce7;color:#166534}.q.md{background:#fef3c7;color:#92400e}.q.lo{background:#fee2e2;color:#991b1b}
+.cowrap{background:#fff;border:1px solid #dbe3ee;border-radius:12px;padding:12px;margin-top:12px}
+.cowrap .msg{background:#eff6ff;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:12px;color:#1e3a8a}
+.cowrap .me{background:#f1f5f9;color:#334155;margin-left:40px}
+.gen{background:var(--c1);color:#fff;border:0;border-radius:8px;padding:6px 12px;font:700 12px inherit;font-family:inherit;cursor:pointer;margin-top:6px}
+.genout{display:none;margin-top:8px;font-size:11.5px;color:#334155;background:#f8fafc;border:1px dashed #93c5fd;border-radius:9px;padding:8px 10px}
+.genout.on{display:block}
+.cat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.cat .cc{background:#fff;border:1px solid #dbe3ee;border-radius:11px;overflow:hidden;font-size:12px}
+.cat .cc i{display:block;height:64px}.cat .cc div{padding:8px 10px}.cat .cc small{color:#64748b}
+.pb{height:6px;background:#e2e8f0;border-radius:9px;overflow:hidden;margin-top:5px}.pb i{display:block;height:100%;background:var(--c1)}
+/* tables */
+table.cmp{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);font-size:14px}
+table.cmp th,table.cmp td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.cmp th{background:#f8fafc;font-size:13px}
+table.cmp td:first-child{font-weight:700;color:#334155;width:20%}
+.dots{letter-spacing:2px;color:var(--blue);font-weight:800}
+.reco{background:linear-gradient(120deg,#0f172a,#1e3a8a);color:#fff;border-radius:16px;padding:24px;margin-top:20px}
+.reco h2{margin-top:0;color:#fff}.reco p,.reco li{color:#dbe4ff}.reco ul{padding-left:20px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+@media(max-width:980px){.steps{grid-template-columns:1fr}}
+.steps div{background:#ffffff14;border:1px solid #ffffff30;border-radius:12px;padding:12px;font-size:13px}
+.steps b{display:block;color:#93c5fd;font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.layers{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.layers div{border-radius:10px;padding:10px 14px;font-size:13.5px;color:#fff;font-weight:600;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.layers small{font-weight:400;opacity:.9}
+code{background:#eef2f7;padding:1px 6px;border-radius:5px;font-size:12.5px}
+#C1 .desk{flex:1 1 100%;max-width:none}#C1 .side{flex:1 1 100%;max-width:none;display:grid;grid-template-columns:1fr 1fr;gap:12px}#C1 .side .card{margin:0}@media(max-width:980px){#C1 .side{grid-template-columns:1fr}}
+.chk li{list-style:none;margin:6px 0}.chk li:before{content:"\2610  ";color:var(--blue)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+    <b>KAUTTA</b><span style="color:#60a5fa;font-weight:600;margin-left:6px">Plataforma · 3 propuestas de preview</span>
+  </div>
+  <div class="sub">Preview V1 · 18 nov 2026 · Solo diseño, sin código · Empresa nueva, separada de Carnovo y Carnix</div>
+  <nav class="tabs" id="tabs">
+    <button data-p="p0" class="on">Lo que aprendí</button>
+    <button data-p="pA">A · Feed</button>
+    <button data-p="pB">B · Hub de cohortes</button>
+    <button data-p="pC">C · Fábrica</button>
+    <button data-p="pD">Comparar y recomendar</button>
+    <button data-p="pE">Base común y nomenclatura</button>
+  </nav>
+</header>
+<main>
+
+<!-- ===================== LO QUE APRENDÍ ===================== -->
+<section class="pane on" id="p0">
+  <h1>De dónde salen las tres propuestas</h1>
+  <p class="lead">Cada propuesta mezcla lo mejor de tres fuentes y le suma ideas nuevas. Lo que ves marcado como <span class="tag t-k">KAUTTA</span> viene del panel y los documentos de Eduardo, <span class="tag t-x">30X</span> viene del Hub que ya cursaste, y <span class="tag t-n">Nuevo</span> son ideas que no existen en ninguno de los dos.</p>
+  <div class="grid g3">
+    <div class="card">
+      <h3><span class="tag t-k">KAUTTA</span>Lo bueno</h3>
+      <ul>
+        <li>Jerarquía clara: Ruta, Especialización, Curso, Bloque, Escenario, Experiencia.</li>
+        <li>Cursos con versión y estado. Un curso publicado se bloquea y los cambios van por duplicado o borrador.</li>
+        <li>Grupos (cohortes) atados a una versión publicada.</li>
+        <li>Visión de Learning Feed, IA Orquestadora (pregunta, no responde), Learning Trace, Drive Cognitivo, Prompt Coach.</li>
+        <li>Reglas sanas: multi-tenant desde el día uno, la IA nunca califica, indicadores propios (IRAC: avance 30%, cumplimiento 25%, desempeño 20%, persistencia 15%, interacción 10%).</li>
+      </ul>
+      <p style="margin-top:8px;font-size:13px;color:var(--mut)">Lo que falta: hoy es un LMS administrativo, con datos de prueba (17 cursos, 2 reales, 4 alumnos) y sin la capa de IA activa.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag t-x">30X</span>Lo bueno</h3>
+      <ul>
+        <li>Pantalla "Hoy": qué toca hacer ahora, en una sola vista.</li>
+        <li>Sesiones con grabación, materiales por sesión y calendario.</li>
+        <li>Insignias, Networking, Beneficios, Mi Red y Mensajes: el alumno siente que pertenece a algo.</li>
+        <li>"Crear mi pieza" para LinkedIn: el alumno publica su logro y trae gente nueva.</li>
+        <li>Programas recomendados y comunidad por cohorte.</li>
+      </ul>
+      <p style="margin-top:8px;font-size:13px;color:var(--mut)">Lo que falta: es un hub de consumo y comunidad; no mide cómo piensa el alumno ni usa IA para guiarlo.</p>
+    </div>
+    <div class="card">
+      <h3><span class="tag t-b">Mercado</span>Huecos del benchmark</h3>
+      <ul>
+        <li>Platzi, EDteam y Coursera dominan el catálogo, pero el aprendizaje sigue siendo ver video y hacer examen.</li>
+        <li>Canvas lidera administración y analítica, pero es pesado y caro de implementar.</li>
+        <li>Sabionet ya genera un curso con IA en minutos: el estándar mínimo de producción de contenido.</li>
+        <li>Nadie evalúa el proceso de uso de IA del alumno de forma nativa.</li>
+      </ul>
+      <p style="margin-top:8px;font-size:13px;color:var(--mut)">El benchmark de KAUTTA pide además crear un curso espejo en Sabionet para comparar capas académica y operativa.</p>
+    </div>
+  </div>
+
+  <h2>Ideas nuevas que entran en las propuestas</h2>
+  <div class="grid g3">
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Aprende por WhatsApp</h3><p style="color:#475569">Un microreto diario llega por WhatsApp y el alumno responde con texto o nota de voz. Es el canal que ya usa tu mercado, sin instalar app.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Defensa oral con IA</h3><p style="color:#475569">El alumno explica con su voz lo que aprendió y la IA le hace preguntas. Queda como evidencia en el Learning Trace. Evalúa pensamiento, no memoria.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Casos de tu empresa</h3><p style="color:#475569">Una empresa cliente sube sus procedimientos y la IA arma escenarios con su propio contexto. Aprender con sus casos reales, no ejemplos genéricos.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Fábrica de cursos con Claude</h3><p style="color:#475569">De una idea a un curso publicable en pasos con control de calidad. Es lo que más acelera tu necesidad de desarrollar muchos cursos.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Prompt Trace</h3><p style="color:#475569">El docente ve cómo usó la IA cada alumno (qué preguntó, qué copió, qué cambió). Convierte el "copié de ChatGPT" en un dato evaluable.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Certificado verificable</h3><p style="color:#475569">Cada certificado trae QR y URL pública de verificación, más una pieza lista para LinkedIn con texto sugerido por IA. Cada logro es publicidad.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Alertas de riesgo para el gerente</h3><p style="color:#475569">El IRAC por equipo pasa a semáforo y avisa por WhatsApp o correo cuando alguien se atrasa. Útil para vender capacitación a empresas.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Presupuesto de IA visible</h3><p style="color:#475569">Cada academia y cada alumno ve su consumo de IA con tope. Evita sorpresas de costo y sirve para definir planes de precio.</p></div>
+    <div class="card"><span class="tag t-n">Nuevo</span><h3>Academias con marca propia</h3><p style="color:#475569">Cada socio o creador tiene su academia con su logo y dominio, sobre la misma plataforma y con reparto de ingresos.</p></div>
+  </div>
+  <div class="note"><b>Acceso a Abacus:</b> el enlace que mandó Eduardo abre una pantalla de pago de ChatLLM Teams ($7 el primer mes, luego $10). No ingresé ninguna tarjeta. No bloquea este preview, porque ya vi el panel publicado y leí los tres documentos. Si quieres ver el proyecto editable, lo más limpio es que Eduardo comparta la conversación como lectura o te dé una cuenta demo.</div>
+</section>
+
+<!-- ===================== PROPUESTA A ===================== -->
+<section class="pane A" id="pA">
+  <div class="ph">
+    <div class="badge" style="background:linear-gradient(135deg,#7c5cff,#22d3ee)">A</div>
+    <div class="txt">
+      <h1>KAUTTA Feed</h1>
+      <p class="lead" style="margin-bottom:6px">Aprender como se consume hoy: un feed vertical de microcontenido de 30 segundos a 2 minutos, donde cada decisión del alumno es una evidencia y la IA le hace preguntas en lugar de darle respuestas.</p>
+      <div class="meta">
+        <div><b>Se parece a</b>TikTok + tutor socrático</div>
+        <div><b>Cliente ideal</b>Personas y empresas jóvenes, móvil primero</div>
+        <div><b>Complejidad</b>Alta</div>
+        <div><b>Riesgo principal</b>Necesita muchas piezas cortas y mucha IA</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-bottom:6px">
+    <div class="card"><span class="tag t-k">KAUTTA</span> Learning Feed, IA Orquestadora, Learning Trace, Drive Cognitivo, Prompt Coach, escenarios.</div>
+    <div class="card"><span class="tag t-x">30X</span> "Hoy" como entrada, insignias por avance y la pieza para LinkedIn al terminar.</div>
+    <div class="card"><span class="tag t-n">Nuevo</span> Aprende por WhatsApp, defensa oral con IA, racha de 5 minutos, Prompt Trace.</div>
+  </div>
+  <div class="seg" data-grp="A"><button class="on" data-v="A1">Pantalla del alumno</button><button data-v="A2">Panel del admin</button></div>
+  <div class="stage">
+    <div class="view on" id="A1">
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="top"><span>Escenario 3 · Decide</span><span class="streak">Racha 6 dias</span></div>
+        <div class="fc">
+          <div class="bar"><i></i></div>
+          <div class="vid"><small>0:48</small></div>
+          <div class="q">Tu cliente pide un descuento del 20% el día de cierre. ¿Qué haces primero?</div>
+          <button class="opt" data-r="Interesante. ¿Qué información tienes sobre el margen real de esa venta antes de decidir?">Acepto para cerrar hoy</button>
+          <button class="opt" data-r="Buena pregunta. ¿Qué podrías ofrecer a cambio para que el descuento no sea gratis?">Pregunto qué necesita lograr</button>
+          <button class="opt" data-r="Claro. Antes de contestar, ¿qué dato te falta para sostener ese precio?">Defiendo el precio</button>
+          <div class="ia" id="aIa"></div>
+        </div>
+        <div class="dock"><b>Feed</b><span>Ruta</span><span>Drive</span><span>Coach</span><span>Yo</span></div>
+      </div></div>
+      <div class="side">
+        <div class="card" style="background:#1a1740;border-color:#3a3390;color:#e7e5ff">
+          <h3 style="color:#fff">Cómo funciona</h3>
+          <ul style="color:#c9c5f5">
+            <li>Toca una opción: la IA no dice si acertaste, te hace una pregunta para que razones.</li>
+            <li>Cada toque, salto o repetición queda en el Learning Trace.</li>
+            <li>Lo que generes (resúmenes, prompts) se guarda solo en tu Drive Cognitivo.</li>
+            <li>Al terminar el escenario hay una defensa oral de 60 segundos.</li>
+          </ul>
+        </div>
+        <div class="card" style="background:#1a1740;border-color:#3a3390;color:#e7e5ff">
+          <h3 style="color:#fff">Menú lateral propuesto (admin y docente)</h3>
+          <span class="pill">Estudio de piezas</span><span class="pill">Rutas</span><span class="pill">Cohortes</span><span class="pill">Learning Trace</span><span class="pill">Analítica</span><span class="pill">IA y consumo</span><span class="pill">Ajustes</span>
+        </div>
+        <p style="font-size:12.5px;color:#475569">Prueba la pantalla: toca una de las tres opciones.</p>
+      </div>
+    </div>
+    <div class="view" id="A2">
+      <div class="desk">
+        <div class="chrome"><i></i><i></i><i></i><span>admin.kautta (dominio por definir) / estudio</span></div>
+        <div class="dk">
+          <div class="sb"><div class="on">Estudio de piezas</div><div>Rutas</div><div>Cohortes</div><div>Learning Trace</div><div>Analítica</div><div>IA y consumo</div><div>Ajustes</div></div>
+          <div class="mn">
+            <h3 style="color:#fff;margin-bottom:8px">Escenario 3 · Negociación bajo presión</h3>
+            <table>
+              <tr><th>Pieza</th><th>Tipo</th><th>Duración</th><th>Retención</th></tr>
+              <tr><td>1 · El cliente llama el viernes</td><td><span class="chip c1">Video</span></td><td>0:52</td><td>91%</td></tr>
+              <tr><td>2 · ¿Qué haces primero?</td><td><span class="chip c2">Decisión</span></td><td>0:48</td><td>84%</td></tr>
+              <tr><td>3 · Redacta tu respuesta con IA</td><td><span class="chip c3">Reto de prompt</span></td><td>1:30</td><td>63%</td></tr>
+              <tr><td>4 · Defiende tu decisión</td><td><span class="chip c1">Defensa oral</span></td><td>1:00</td><td>58%</td></tr>
+            </table>
+            <p style="color:#8c88c8;margin-top:10px;font-size:11.5px">Dónde se va el alumno (por pieza)</p>
+            <div class="curve"><i style="height:96%"></i><i style="height:84%"></i><i style="height:63%"></i><i style="height:58%"></i><i style="height:40%"></i><i style="height:34%"></i></div>
+            <p style="color:#ffc58a;font-size:11.5px">Alerta: la pieza 3 pierde 21 puntos. Sugerencia de IA: acortar las instrucciones del reto.</p>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card"><h3>Qué se administra aquí</h3><ul><li>Piezas cortas por escenario, con tipo y duración objetivo.</li><li>Curva de abandono por pieza para editar con datos.</li><li>Reglas de la IA Orquestadora por escenario (qué puede preguntar, qué no).</li><li>Learning Trace por alumno, solo lectura.</li></ul></div>
+        <div class="card"><h3>Riesgo a tener claro</h3><p style="color:#475569">Un feed sin catálogo suficiente se ve vacío. Hacen falta decenas de piezas por curso, y cada interacción con IA tiene costo variable.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROPUESTA B ===================== -->
+<section class="pane B" id="pB">
+  <div class="ph">
+    <div class="badge" style="background:#e4572e">B</div>
+    <div class="txt">
+      <h1>KAUTTA Hub de cohortes</h1>
+      <p class="lead" style="margin-bottom:6px">Programas con generación, calendario, sesiones y comunidad, como el Hub de 30X, pero con la estructura versionada de KAUTTA debajo y un tablero de riesgo académico para quien paga.</p>
+      <div class="meta">
+        <div><b>Se parece a</b>30X Hub + tablero académico de KAUTTA</div>
+        <div><b>Cliente ideal</b>Programas premium y capacitación corporativa</div>
+        <div><b>Complejidad</b>Media</div>
+        <div><b>Riesgo principal</b>Depende de sesiones en vivo y de moderar comunidad</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-bottom:6px">
+    <div class="card"><span class="tag t-k">KAUTTA</span> Cursos versionados, grupos atados a versión, IRAC, historial de cambios, multi-tenant.</div>
+    <div class="card"><span class="tag t-x">30X</span> Hoy, sesiones con grabación, insignias, networking, beneficios, mi red, mensajes, pieza LinkedIn.</div>
+    <div class="card"><span class="tag t-n">Nuevo</span> Alertas de riesgo al gerente, casos de tu empresa, certificado verificable, microreto por WhatsApp.</div>
+  </div>
+  <div class="seg" data-grp="B"><button class="on" data-v="B1">Pantalla del alumno</button><button data-v="B2">Panel del admin</button></div>
+  <div class="stage">
+    <div class="view on" id="B1">
+      <div class="desk">
+        <div class="chrome"><i></i><i></i><i></i><span>hub.kautta (dominio por definir) / hoy</span></div>
+        <div class="bk">
+          <div class="sb"><h4>KAUTTA</h4><div class="on">Hoy</div><div>Sesiones</div><div>Mi ruta</div><div>Insignias</div><div>Red</div><div>Beneficios</div><small>Más</small><div>Mensajes</div><div>Drive</div></div>
+          <div class="mn">
+            <div class="hero"><small>Cohorte 4 · Operaciones con IA</small><h3>Hoy: Bloque 3, Escenario 2</h3><span class="btn">Entrar a la sesión de las 7:00 pm</span><span class="btn ghost">Ver material</span></div>
+            <div class="row">
+              <div class="bx"><h5>Tu semana</h5>
+                <div class="li"><span><i class="dot" style="background:#2f6f4f"></i>Lun · Caso de inventarios</span><b>Hecho</b></div>
+                <div class="li"><span><i class="dot" style="background:#e4572e"></i>Mié · Sesión en vivo</span><b>Hoy 7 pm</b></div>
+                <div class="li"><span><i class="dot" style="background:#cbbf9f"></i>Vie · Entrega: tu primer flujo</span><b>Pendiente</b></div>
+              </div>
+              <div class="bx"><h5>Tu cohorte</h5>
+                <div class="av"><i style="background:#e4572e"></i><i style="background:#2f6f4f"></i><i style="background:#c9a227"></i><i style="background:#3b5b92"></i><i style="background:#8a5a9e"></i></div>
+                <p style="margin:8px 0;font-size:12px;color:#5e584a">Marisol compartió su caso de bodega. 3 comentarios nuevos.</p>
+                <h5 style="margin-top:8px">Insignias</h5>
+                <div class="badges"><i style="background:#2f6f4f">1</i><i style="background:#e4572e">7d</i><i style="background:#c9a227">IA</i><i style="background:#cfc6ae">?</i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card"><h3>Menú lateral propuesto (alumno)</h3><span class="pill">Hoy</span><span class="pill">Sesiones</span><span class="pill">Mi ruta</span><span class="pill">Insignias</span><span class="pill">Red</span><span class="pill">Beneficios</span><span class="pill">Mensajes</span><span class="pill">Drive</span></div>
+        <div class="card"><h3>Lo que lo hace distinto de 30X</h3><ul><li>Debajo de "Mi ruta" hay escenarios con evidencia, no solo sesiones grabadas.</li><li>La pieza de LinkedIn sale del Learning Trace: usa lo que el alumno realmente hizo.</li><li>El gerente de una empresa cliente ve el avance de su equipo sin entrar a las sesiones.</li></ul></div>
+      </div>
+    </div>
+    <div class="view" id="B2">
+      <div class="desk">
+        <div class="chrome"><i></i><i></i><i></i><span>admin.kautta (dominio por definir) / cohortes</span></div>
+        <div class="bk">
+          <div class="sb"><h4>Admin</h4><div class="on">Cohortes</div><div>Calendario</div><div>Programas</div><div>Alumnos</div><div>Comunidad</div><div>Certificados</div><small>Sistema</small><div>Analítica</div><div>Ajustes</div></div>
+          <div class="mn">
+            <h3 style="margin-bottom:8px">Cohorte 4 · Operaciones con IA <span class="pill">24 alumnos</span><span class="pill">Semana 3 de 8</span></h3>
+            <div class="row">
+              <div class="bx"><h5>Riesgo académico (IRAC)</h5>
+                <table><tr><th>Alumno</th><th>Avance</th><th>Riesgo</th></tr>
+                <tr><td>Marisol R.</td><td>72%</td><td><span class="dot" style="background:#2f6f4f"></span>Bajo</td></tr>
+                <tr><td>Jorge T.</td><td>41%</td><td><span class="dot" style="background:#c9a227"></span>Medio</td></tr>
+                <tr><td>Luis P.</td><td>12%</td><td><span class="dot" style="background:#dc2626"></span>Alto</td></tr></table>
+                <p style="font-size:11.5px;color:#7a7365;margin-top:6px">Se calcula en lote cada noche. La IA sugiere el mensaje; tú decides si se envía.</p>
+              </div>
+              <div class="bx"><h5>Próximas sesiones</h5>
+                <div class="li"><span>Mié 7 pm · Escenario 2</span><b>Zoom</b></div>
+                <div class="li"><span>Vie · Entrega 1</span><b>24 de 24</b></div>
+                <div class="li"><span>Mié 25 · Cierre bloque 3</span><b>Borrador</b></div>
+                <h5 style="margin-top:10px">Acciones</h5><span class="btn">Enviar recordatorio</span><span class="btn ghost" style="background:#1b1a1722;color:#1b1a17">Duplicar cohorte</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card"><h3>Qué se administra aquí</h3><ul><li>Cohortes sobre una versión congelada del curso.</li><li>Calendario de sesiones, asistencia y grabaciones.</li><li>Tablero de riesgo por alumno y por cohorte.</li><li>Moderación de comunidad y envío de certificados verificables.</li></ul></div>
+        <div class="card"><h3>Riesgo a tener claro</h3><p style="color:#475569">Se vende como programa con fecha, así que necesita facilitadores y operación humana desde la primera cohorte.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROPUESTA C ===================== -->
+<section class="pane C" id="pC">
+  <div class="ph">
+    <div class="badge" style="background:#2563eb">C</div>
+    <div class="txt">
+      <h1>KAUTTA Fábrica de cursos</h1>
+      <p class="lead" style="margin-bottom:6px">Primero la máquina que produce cursos, y encima academias con marca propia para cada socio o creador. Es la propuesta pensada para "va a haber muchos cursos" y para que desarrollemos cursos juntos.</p>
+      <div class="meta">
+        <div><b>Se parece a</b>Sabionet con IA, pero con control de calidad</div>
+        <div><b>Cliente ideal</b>Socios, expertos y empresas que crean sus propios cursos</div>
+        <div><b>Complejidad</b>Media a alta</div>
+        <div><b>Riesgo principal</b>Calidad pedagógica si se produce demasiado rápido</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-bottom:6px">
+    <div class="card"><span class="tag t-k">KAUTTA</span> Ruta, curso, escenario, versiones, estados, historial, multi-tenant, evaluación como fuente de verdad.</div>
+    <div class="card"><span class="tag t-x">30X</span> Programas recomendados, materiales por sesión y pieza de logro para compartir.</div>
+    <div class="card"><span class="tag t-n">Nuevo</span> Tubería de producción con Claude como coautor, puntaje de calidad por curso, academias con marca propia, reparto de ingresos.</div>
+  </div>
+  <div class="seg" data-grp="C"><button class="on" data-v="C1">Panel del admin (Fábrica)</button><button data-v="C2">Academia del alumno</button></div>
+  <div class="stage">
+    <div class="view on" id="C1">
+      <div class="desk" style="max-width:900px">
+        <div class="chrome"><i></i><i></i><i></i><span>admin.kautta (dominio por definir) / fabrica</span></div>
+        <div class="ck">
+          <div class="sb"><h4>KAUTTA</h4><div class="on">Fábrica</div><div>Cursos</div><div>Rutas</div><div>Academias</div><div>Alumnos</div><div>Evaluación</div><div>Analítica</div><div>IA y consumo</div><div>Ajustes</div></div>
+          <div class="mn">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3>Tubería de producción</h3><span class="pill">9 en proceso</span></div>
+            <div class="kan">
+              <div class="col"><h6>Idea <span>2</span></h6><div class="kc">Negociación con IA<small>Socio: Eduardo</small></div><div class="kc">Excel para ventas<small>Socio: por definir</small></div></div>
+              <div class="col"><h6>Brief <span>2</span></h6><div class="kc">Prompt para operaciones<small>Público: mandos medios</small></div><div class="kc">Atención al cliente con IA<small>Público: tiendas</small></div></div>
+              <div class="col"><h6>Escenarios <span>2</span></h6><div class="kc">Piensa mejor con IA<small>7 escenarios · <span class="q md">62</span></small></div><div class="kc">Marketing con IA<small>5 escenarios · <span class="q md">58</span></small></div></div>
+              <div class="col"><h6>Evaluación y QA <span>2</span></h6><div class="kc">Programación web JS<small>Rúbrica lista · <span class="q hi">81</span></small></div><div class="kc">SEO básico<small>Falta rúbrica · <span class="q lo">44</span></small></div></div>
+              <div class="col"><h6>Publicado <span>1</span></h6><div class="kc">Piensa mejor con IA v1<small>1 grupo · <span class="q hi">88</span></small></div></div>
+            </div>
+            <div class="cowrap">
+              <b style="font-size:12px;color:#1d4ed8">Coautor IA · Negociación con IA</b>
+              <div class="msg me">Público: ejecutivos de ventas. Objetivo: negociar sin regalar margen.</div>
+              <div class="msg">Propongo 6 escenarios, 12 experiencias y una rúbrica de 4 criterios. ¿Quieres que lo arme y marque lo que debe validar un experto humano?</div>
+              <button class="gen" id="genBtn">Generar escenarios con IA</button>
+              <div class="genout" id="genOut"><b>Borrador generado (ejemplo):</b><br>1. El cliente pide descuento al cierre<br>2. Competidor baja precio 15%<br>3. Cliente grande retrasa el pago<br>4. Negociar por valor, no por precio<br>5. Cierre con tres condiciones<br>6. Reflexión: qué cambiaría<br><i style="color:#64748b">Estado: borrador. Pendiente de revisión humana antes de pasar a QA.</i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card"><h3>La tubería</h3><p style="color:#475569">Idea, Brief, Escenarios, Evaluación y QA, Publicado. Nada pasa de etapa sin los requisitos de la anterior. El puntaje de calidad suma objetivos claros, rúbrica, escenarios con decisión, cobertura de evaluación y revisión humana.</p></div>
+        <div class="card"><h3>Qué se administra aquí</h3><ul><li>Cursos de todos los socios en un solo tablero.</li><li>Versiones congeladas: publicar bloquea, duplicar abre una nueva.</li><li>Academias (una por socio o empresa) con su marca y su reparto.</li><li>Consumo de IA por curso y por academia.</li></ul></div>
+      </div>
+    </div>
+    <div class="view" id="C2">
+      <div class="desk">
+        <div class="chrome"><i></i><i></i><i></i><span>academia.socio.kautta (marca propia, dominio por definir)</span></div>
+        <div style="padding:16px;background:#fff">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#2563eb;font-size:16px">Academia Prisma <span class="pill">marca del socio</span></b><span class="pill">Mi ruta</span></div>
+          <h3 style="margin:14px 0 4px">Continúa donde te quedaste</h3>
+          <div class="cat">
+            <div class="cc"><i style="background:linear-gradient(120deg,#2563eb,#60a5fa)"></i><div><b>Piensa mejor con IA</b><br><small>Escenario 3 de 7</small><div class="pb"><i style="width:43%"></i></div></div></div>
+            <div class="cc"><i style="background:linear-gradient(120deg,#0ea5e9,#22d3ee)"></i><div><b>Negociación con IA</b><br><small>Por empezar</small><div class="pb"><i style="width:0"></i></div></div></div>
+            <div class="cc"><i style="background:linear-gradient(120deg,#6366f1,#a78bfa)"></i><div><b>Excel para ventas</b><br><small>Próximamente</small><div class="pb"><i style="width:0"></i></div></div></div>
+          </div>
+          <h3 style="margin:16px 0 4px">Tu ruta</h3>
+          <p style="color:#64748b;font-size:12.5px">Ruta Herramientas de IA &gt; Especialización Productividad &gt; 3 cursos &gt; Certificado verificable con QR.</p>
+        </div>
+      </div>
+      <div class="side">
+        <div class="card"><h3>Idea clave</h3><p style="color:#475569">El alumno ve una academia simple y limpia con la marca de quien vende el curso. Debajo es la misma plataforma, con los mismos datos y reglas.</p></div>
+        <div class="card"><h3>Menú lateral propuesto (alumno)</h3><span class="pill">Inicio</span><span class="pill">Mi ruta</span><span class="pill">Catálogo</span><span class="pill">Drive</span><span class="pill">Certificados</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== COMPARAR ===================== -->
+<section class="pane" id="pD">
+  <h1>Comparativo y recomendación</h1>
+  <p class="lead">Las puntuaciones son mi criterio de diseño (más puntos es mejor para tu situación actual), no datos medidos.</p>
+  <table class="cmp">
+    <tr><th></th><th>A · Feed</th><th>B · Hub de cohortes</th><th>C · Fábrica</th></tr>
+    <tr><td>Tesis</td><td>El aprendizaje compite contra el feed</td><td>Programas con comunidad y evidencia</td><td>La máquina de hacer cursos y academias</td></tr>
+    <tr><td>Sirve para "muchos cursos"</td><td class="dots">●●○○○</td><td class="dots">●●●○○</td><td class="dots">●●●●●</td></tr>
+    <tr><td>Sirve para desarrollar cursos contigo</td><td class="dots">●●○○○</td><td class="dots">●●○○○</td><td class="dots">●●●●●</td></tr>
+    <tr><td>Fidelidad a la visión de KAUTTA</td><td class="dots">●●●●●</td><td class="dots">●●●○○</td><td class="dots">●●●○○</td></tr>
+    <tr><td>Sin primer usuario definido</td><td class="dots">●●○○○</td><td class="dots">●●●○○</td><td class="dots">●●●●○</td></tr>
+    <tr><td>Simplicidad de construir (Lovable y Supabase)</td><td class="dots">●●○○○</td><td class="dots">●●●●○</td><td class="dots">●●●○○</td></tr>
+    <tr><td>Costo variable de IA</td><td>Alto: cada interacción usa IA</td><td>Bajo a medio</td><td>Medio: se concentra al producir</td></tr>
+    <tr><td>Primer demo creíble</td><td>Un solo escenario en móvil</td><td>Una cohorte de 10 personas</td><td>Un curso producido de punta a punta</td></tr>
+    <tr><td>Riesgo mayor</td><td>Feed vacío sin contenido</td><td>Operación humana constante</td><td>Calidad pedagógica con prisa</td></tr>
+  </table>
+  <div class="reco">
+    <h2>Mi recomendación: un camino híbrido, en este orden</h2>
+    <p>No hay primer usuario, así que lo primero que necesitamos es algo que produzca cursos de calidad rápido y que sirva de base para cualquiera de las otras dos. Por eso propongo empezar por C, vestirlo con la experiencia de B y dejar A como la capa de interfaz más diferenciadora cuando ya haya contenido.</p>
+    <div class="steps">
+      <div><b>Fase 1 · Núcleo</b>Multi-tenant, roles, rutas, cursos, escenarios, versiones, grupos, auditoría. Es común a A, B y C.</div>
+      <div><b>Fase 2 · Fábrica (C)</b>Tubería de producción con Claude como coautor y puntaje de calidad. Producimos el primer curso real con esto.</div>
+      <div><b>Fase 3 · Hub (B)</b>Hoy, sesiones, insignias, red, certificado verificable y tablero de riesgo. Ya se puede abrir una primera cohorte.</div>
+      <div><b>Fase 4 · Feed (A)</b>Learning Feed, IA Orquestadora, Prompt Trace, defensa oral y WhatsApp, sobre contenido ya existente.</div>
+    </div>
+    <p style="margin-top:14px;font-size:13px;color:#bcd0ff">Si prefieres elegir una sola para empezar: C si lo urgente es producir cursos, B si lo urgente es vender un programa con fecha, A si lo urgente es demostrar la diferencia de KAUTTA ante socios o inversionistas.</p>
+  </div>
+</section>
+
+<!-- ===================== BASE COMÚN ===================== -->
+<section class="pane" id="pE">
+  <h1>Base común y nomenclatura</h1>
+  <p class="lead">Lo que se construye igual sin importar qué propuesta elijas. Aquí es donde evitamos errores caros más adelante.</p>
+  <h2>Capas de la plataforma</h2>
+  <div class="layers">
+    <div style="background:#7c5cff">Capa inteligente <small>Feed, IA orquestadora, Prompt Coach, Prompt Trace, defensa oral (Fase 4)</small></div>
+    <div style="background:#e4572e">Capa de experiencia <small>Hoy, sesiones, insignias, red, certificados, WhatsApp (Fase 3)</small></div>
+    <div style="background:#2563eb">Capa de producción <small>Fábrica de cursos, calidad, versiones, academias (Fase 2)</small></div>
+    <div style="background:#0f172a">Núcleo académico <small>Tenants, usuarios, roles, rutas, cursos, escenarios, grupos, evaluación, auditoría (Fase 1)</small></div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <h3>Modelo de datos (tablas principales)</h3>
+      <p style="color:#475569;font-size:13.5px">Todas llevan <code>tenant_id</code> con RLS en Supabase.</p>
+      <ul>
+        <li><code>tenants</code>, <code>usuarios</code>, <code>membresias</code> (rol por tenant)</li>
+        <li><code>rutas</code>, <code>especializaciones</code>, <code>cursos</code> (con <code>version_de</code> y <code>estado</code>)</li>
+        <li><code>bloques</code>, <code>escenarios</code>, <code>experiencias</code>, <code>rubricas</code></li>
+        <li><code>grupos</code>, <code>inscripciones</code>, <code>progreso</code>, <code>intentos</code>, <code>calificaciones</code></li>
+        <li><code>eventos_usuario</code>, <code>historico_indicadores</code> (IRAC e IPA, lote diario)</li>
+        <li><code>consumo_ia</code>, <code>drive_items</code>, <code>certificados</code></li>
+        <li><code>auditoria</code>, <code>produccion_tareas</code> (para la Fábrica)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Reglas que se heredan de KAUTTA</h3>
+      <ul>
+        <li>Curso publicado = solo lectura; cambios por borrador o copia.</li>
+        <li>La IA nunca modifica calificaciones ni decide sola.</li>
+        <li>El sistema de evaluación es la única fuente de verdad académica.</li>
+        <li>Toda consulta filtra por tenant; los indicadores se calculan en lote nocturno.</li>
+        <li>Todo consumo de IA queda registrado con su costo.</li>
+      </ul>
+      <h3 style="margin-top:12px">Reglas nuevas que propongo</h3>
+      <ul>
+        <li>Ningún curso se publica sin puntaje de calidad mínimo y una revisión humana.</li>
+        <li>El contenido de terceros (por ejemplo cursos de 30X) nunca se copia a la plataforma.</li>
+      </ul>
+    </div>
+  </div>
+  <h2>Cómo separar KAUTTA de Carnovo y Carnix</h2>
+  <div class="note" style="background:#eff6ff;border-color:#bfdbfe;color:#1e3a8a">Entiendo "Nova, Bold y Superbase" como Lovable, Bolt y Supabase, y que lo que buscas es poder identificar de un vistazo qué proyecto es de KAUTTA. Confírmame si no es así.</div>
+  <table class="cmp">
+    <tr><th>Elemento</th><th>Nombre propuesto</th><th>Nota</th></tr>
+    <tr><td>Marca y cuenta</td><td>KAUTTA (empresa nueva)</td><td>Cuenta y correo propios, no srgl@carnovofoods.com para producción</td></tr>
+    <tr><td>Lovable</td><td><code>kt-plataforma</code></td><td>App principal: alumno, docente y admin</td></tr>
+    <tr><td>Bolt</td><td><code>kt-lab</code></td><td>Prototipos desechables (feed, fábrica) sin tocar el proyecto principal</td></tr>
+    <tr><td>Supabase</td><td><code>kt-dev</code>, <code>kt-staging</code>, <code>kt-prod</code></td><td>Tres proyectos separados; nunca mezclar con los de Carnovo</td></tr>
+    <tr><td>GitHub</td><td>Organización <code>kautta</code>, repo <code>kt-plataforma</code></td><td>Respaldo del código y control de cambios</td></tr>
+    <tr><td>IDs de negocio</td><td><code>KT-CUR-0001</code>, <code>KT-GRP-0001</code></td><td>Reemplaza el formato mk-266d0o-01 de hoy, que es poco legible</td></tr>
+    <tr><td>Tickets</td><td><code>KT-001</code>, <code>KT-002</code>...</td><td>Continúa la costumbre KAUTTA-501</td></tr>
+    <tr><td>Dominios (por comprar)</td><td>app, admin, hub, verificar</td><td>Después de elegir propuesta; se comparan disponibilidad y extensión</td></tr>
+  </table>
+  <h2>Decisiones que necesito de ti</h2>
+  <div class="card"><ul class="chk">
+    <li>Elegir una propuesta, o aprobar el camino híbrido (C, luego B, luego A).</li>
+    <li>Confirmar la lectura de "Nova, Bold y Superbase" como Lovable, Bolt y Supabase.</li>
+    <li>Quiénes son los socios y quién opera la cuenta de KAUTTA (para crear cuentas propias).</li>
+    <li>Idioma y país inicial: ¿solo español de México o ya pensamos en LATAM?</li>
+    <li>Qué hacemos con el acceso a Abacus: pagar la suscripción, o pedir a Eduardo que comparta lectura.</li>
+    <li>Cuál es el primer curso que quieres que desarrollemos juntos.</li>
+  </ul></div>
+</section>
+
+</main>
+<script>
+const tabs=document.querySelectorAll('#tabs button'),panes=document.querySelectorAll('section.pane');
+function show(id){tabs.forEach(b=>b.classList.toggle('on',b.dataset.p===id));panes.forEach(p=>p.classList.toggle('on',p.id===id));window.scrollTo(0,0);history.replaceState(null,'','#'+id)}
+tabs.forEach(b=>b.onclick=()=>show(b.dataset.p));
+if(location.hash&&document.getElementById(location.hash.slice(1)))show(location.hash.slice(1));
+document.querySelectorAll('.seg').forEach(s=>s.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  s.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  const pane=s.closest('section');pane.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===b.dataset.v));
+}));
+document.querySelectorAll('.A .opt').forEach(o=>o.onclick=()=>{
+  document.querySelectorAll('.A .opt').forEach(x=>x.classList.remove('sel'));o.classList.add('sel');
+  const ia=document.getElementById('aIa');ia.textContent='IA: '+o.dataset.r;ia.classList.add('on');
+});
+document.getElementById('genBtn').onclick=()=>document.getElementById('genOut').classList.add('on');
+</script>
+</body>
+</html>
